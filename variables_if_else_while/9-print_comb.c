@@ -20,5 +20,7 @@ int main(void)
 			putchar(' ');
 		}
 	}
+	putchat('\n')
+
 	return (0);
 }
