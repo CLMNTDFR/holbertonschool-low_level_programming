@@ -3,18 +3,17 @@
 /**
  * main - Print alphabet in lower case followed by a new line
  *
- * Return: Always 0 (Success)
+ * Return: void
  */
-int main(void)
+void print_alphabet(void)
 {
 	char x;
 
-	for (x = 'a'; x >= 'z'; x++)
+	for (x = 'a'; x <= 'z'; x++)
 	{
 		_putchar(x);
 	}
-	_putchar(10);
 
-	return (0);
+	_putchar(10);
 }
 
