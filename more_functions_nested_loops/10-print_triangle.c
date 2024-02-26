@@ -2,6 +2,7 @@
 
 /**
  * print_triangle - function that prints a triangle
+ * @size: number that be checked
  *
  * Return: void
  */
@@ -15,7 +16,7 @@ void print_triangle(int size)
 	{
 	for (x = size; x > 0; x--)
 	{
-		
+
 		for (z = 1; z < x ; z++)
 		{
 				_putchar(32);
