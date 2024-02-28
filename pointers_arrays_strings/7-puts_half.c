@@ -16,9 +16,21 @@ void puts_half(char *str)
 		length++;
 	}
 
-	for (index = (length / 2); index < length; index++)
+	if (length % 2 == 0)
 	{
-		_putchar(str[index]);
+
+		for (index = (length / 2); index < length; index++)
+		{
+			_putchar(str[index]);
+		}
+	}
+
+	else
+	{
+		for (index = ((length + 1)  / 2); index < length; index++)
+		{
+			_putchar(str[index]);
+		}
 	}
 
 	_putchar('\n');
