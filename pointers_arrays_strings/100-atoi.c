@@ -19,7 +19,7 @@ int _atoi(char *s)
 	while (*(s + counter) != '\0')
 		counter++;
 	/* Recherche du premier nombre dans la chaine de caractere */
-	for (i = 0; i < counter, i++)
+	for (i = 0; i < counter; i++)
 	{
 		if (*(s + i) <= '9' && *(s + i) >= '0')
 			break;
