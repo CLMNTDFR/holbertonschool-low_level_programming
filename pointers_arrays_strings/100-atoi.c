@@ -8,33 +8,44 @@
  */
 int _atoi(char *s)
 {
-	int sign = 1;
-	int result = 0;
-	int index = 0;
+	int sign;
+	unsigned int counter, i, j, k, length, num, l;
 
-	if (s[0] == '-')
+	sign = 1;
+	counter = 0;
+	num = 0;
+
+	/* Calcul de la longueur de la chaine */
+	while (*(s + counter) != '\0')
+		counter++;
+	/* Recherche du premier nombre dans la chaine de caractere */
+	for (i = 0; i < counter, i++)
 	{
-		sign = -1;
-		index++;
-	}
-	if (s[0] == '+')
-	{
-		index++;
-	}
-	while (s[index] != '\0')
-	{
-		if (s[index] >= '0' && s[index] <= '0')
-		{
-			result = result * 10 + (s[index]) - '0';
-		}
-		else
-		{
+		if (*(s + i) <= '9' && *(s + i) >= '0')
 			break;
-		}
-		index++;
 	}
-	result = result * sign;
-
-	return (result);
+	/* Recherche du dernier nombre dans la chaine de caractere */
+	for (j = i; j < counter; j++)
+	{
+		if (!(*(s + j) <= '9' && *(s + j) >= '0'))
+			break;
+	}
+	/* Recherche du signe du nombre */
+	for (k = 0; k < i; k++)
+	{
+		if (*(s + k) == '-')
+			sign = -sign;
+	}
+	/* Definition de la taille de la chaine */
+	length = j - i;
+	l = i;
+	/* Convertion de la chaine en nombre entier en le multipliant par 10  */
+	while (length >= 1)
+	{
+		num = num * 10 + (*(s + 1) - '0');
+		l++;
+		length--;
+	}
+	/* Convertion nombre par son signe */
+	return (num * sign);
 }
-
