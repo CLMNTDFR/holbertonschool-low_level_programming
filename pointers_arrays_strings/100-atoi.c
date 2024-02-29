@@ -2,7 +2,7 @@
 
 /**
  * _atoi - function that convert a string to an integrer
- * @s: the string
+ * @s: the striing
  *
  * Return: Result or 0 if string have no number
  */
