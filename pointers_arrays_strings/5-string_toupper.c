@@ -10,7 +10,7 @@ char *string_toupper(char *str)
 {
 	int index;
 
-	for (index = 0; str[index] != '\0', index++)
+	for (index = 0; str[index] != '\0'; index++)
 	{
 		if (str[index] >= 'a' && str[index] <= 'z')
 		{
