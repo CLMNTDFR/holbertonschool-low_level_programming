@@ -9,25 +9,26 @@
  */
 unsigned int _strspn(char *s, char *accept)
 {
-	unsigned int s_count = 0;
-	unsigned int a_count = 0;
+	unsigned int i = 0;
 
-	while (s[s_count] != '\0')
+	while ((s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= 'a' && s[i] <= 'z'))
 	{
-		while (accept[a_count] != '\0')
+		unsigned int j = 0; /* réinitialise j à chaque boucle */
+
+		while (accept[j] != '\0')
 		{
-			if (s[s_count] == accept[a_count])
+			if (s[i] == accept[j])
 			{
 				break;
 			}
-			a_count++;
+			j++;
 		}
-		if (accept[a_count] == '\0')
+		if (accept[j] == '\0')
 		{
 			break;
 		}
-		s_count++;
+		i++;
 	}
-	return (s_count);
+	return (i);
 }
 
