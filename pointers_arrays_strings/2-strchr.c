@@ -18,10 +18,6 @@ char *_strchr(char *s, char c)
 		{
 			return (s + index);
 		}
-		else if (s[index] == '\0')
-		{
-			return (s + index);
-		}
 	}
 	return (NULL);
 }
