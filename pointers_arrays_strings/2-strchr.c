@@ -10,18 +10,12 @@
  */
 char *_strchr(char *s, char c)
 {
-	unsigned int index;
-
-	for (index = 0; s[index] != '\0'; index++)
+	for (; ; s++)/* Boucle infinie */
 	{
-		if (s[index] == c)
-		{
-			return (s + index);
-		}
-		if (s[index] == 0)
-		{
+		if (*s == c)
+			return (s);
+		if (*s == 0)/* caractère de fin de chaine */
 			return (NULL);
-		}
 	}
 	return (NULL);
 }
