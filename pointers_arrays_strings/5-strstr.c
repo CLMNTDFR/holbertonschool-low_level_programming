@@ -11,32 +11,23 @@
  */
 char *_strstr(char *haystack, char *needle)
 {
-	/* Gestion de cas particulier si needle est vide */
-	if (*needle == '\0')
-	{
-		return (NULL);
-	}
+	int i;
+	int s = 0;
+
+	while (needle[s] != '\0')
+		s++;
 
 	while (*haystack)
 	{
-		char *start = haystack;
-		/* Enregistre la position de départ pour le return */
-
-		/* Recherche de needle dans haystack */
-		while (*needle == *haystack)
+		for (i = 0; needle[i]; i++)
 		{
+			if (haystack[i] != needle[i])
+				break;
+		}
+		if (i != s)
 			haystack++;
-			needle++;
-		}
-
-		/* Si needle est vide il a été trouvé */
-		if (*needle == '\0')
-		{
-			return (start);
-		}
-
-		/* Incrémente haystack pour la prochaine itération */
-		haystack++;
+		else
+			return (haystack);
 	}
 	return (NULL);
 }
