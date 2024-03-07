@@ -21,7 +21,10 @@ int main(int argc, char *argv[])
 		}
 		printf("%d\n", mult);
 	}
+	else
+	{
 	printf("Error");
 	return (1);
+	}
 }
 
