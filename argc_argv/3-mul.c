@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
 {
 	int i, mult = 1;
 
-	if (argc > 1)
-	/* si il  reçois au moins deux arguments */
+	if (argc == 3)
+	/* si il  reçois au moins deux arguments (+ son nom) */
 	{
 		for (i = 1; i < argc; i++)
 		{
