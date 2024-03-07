@@ -20,10 +20,11 @@ int main(int argc, char *argv[])
 			mult *= atoi(argv[i]);
 		}
 		printf("%d\n", mult);
+		return (0);
 	}
 	else
 	{
-	printf("Error");
+	printf("Error\n");
 	return (1);
 	}
 }
