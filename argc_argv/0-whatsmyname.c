@@ -2,6 +2,8 @@
 
 /**
  * main - Point Entry
+ * @argc: counter of arguments
+ * @argv: variables of arguments
  *
  * Return: Always 0 (Success)
  */
