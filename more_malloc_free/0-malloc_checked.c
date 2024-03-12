@@ -14,7 +14,7 @@ void *malloc_checked(unsigned int b)
 {
 	void *p;
 
-/* pointeur générique vers n'importe quel type de donné */
+/* pointeur: générique vers n'importe quel type de donné */
 /* si besoin, le pointeur sera "casté" vers un autre type de donné */
 	p = malloc(b);
 
