@@ -11,44 +11,43 @@
 */
 char *str_concat(char *s1, char *s2)
 {
-	int s1_count = 0;
-
-	int s2_count = 0;
-
-	int i;
-
-	int j;
-
+	int a, b;
 	char *dest;
 
-/* calcul de la longueur de s1*/
-	while (s1[s1_count] != '\0')
+/* ckeck si un string est vide */
+	if (s1 == NULL)
 	{
-		s1_count++;
+		s1 = "";
+	}
+	if (s2 == NULL)
+	{
+		s2 = "";
+	}
+/* calcul de la longueur de s1*/
+	for (a = 0; s1[a] != '\0'; a++)
+	{
 	}
 /* calcul de la longueur de s2 */
-	while (s2[s2_count] != '\0')
+	for (b = 0; s2[b] != '\0'; b++)
 	{
-		s2_count++;
 	}
 /* allocation de mémoire pour dest */
-	dest = malloc((s1_count + s2_count + 1) * sizeof(char) + 1);
+	dest = (char *) malloc(((a + b) + 1) * sizeof(char));
 /* check succès mémoire */
 	if (dest == NULL)
 		return (NULL);
 /* copie de s1 vers dest */
-	for (i = 0; i < s1_count; i++)
+	for (a = 0; s1[a] != '\0'; a++)
 	{
-		dest[i] = s1[i];
+		dest[a] = s1[a];
 	}
 /* copie de s2 vers dest */
-	for (j = 0; j < s2_count; i++, j++)
-
+	for (b = 0; s2[b] != '\0'; b++)
 	{
-		dest[i] = s2[j];
+		dest[a] = s2[b];
+		a++;
 	}
 	/* ajout du nul terminal */
-	dest[i] = '\0';
-
+	dest[a] = '\0';
 	return (dest);
 }
