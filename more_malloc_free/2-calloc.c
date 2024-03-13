@@ -11,25 +11,24 @@
 */
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
-	void *p; /* pointeur de type générique */
+	char *p;
 
 	unsigned int i; /* compteur boucle for */
+
+	unsigned int x; /* taille totale de la mémoire allouée  */
 
 	if (nmemb == 0 || size == 0)
 		return (NULL);
 
-	p = malloc(nmemb * size); /* allocation bi-factorielle = NB x taille */
+	x = (nmemb * size); /* calcule taille totale */
+	p = malloc(x); /* allocation de mémoire */
 	if (p == NULL)
-		return (NULL);
+		return (NULL); /* check succès */
 
-	for (i = 0; i < nmemb; i++)
+	for (i = 0; i < x; i++)
 	{
-		*((char *)p + i * size) = 0;
-		/**
-		* initialisation de chaque élement à 0
-		* cast en type char car char = 1 octet
-		* nous sautons de i éléments de taille size dans le tableau
-		*/
+		p[i] = 0;
+		/* initialisation de chaque élement à 0 */
 	}
 
 	return (p);
