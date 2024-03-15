@@ -12,24 +12,25 @@ void print_dog(struct dog *d)
 {
 	if (d)
 	{
+/* Gestion de name */
 		if (d->name != NULL)
 		{
 			printf("Name: %s\n", d->name);
 		}
 		else
 		{
-			printf("Name: (nil)");
+			printf("Name: (nil)\n");
 		}
-
+/* Gestion de age (type float donc ne peut renvoyer NULL)*/
 		printf("Age: %f\n", d->age);
-
+/* Gestion de owner */
 		if (d->owner != NULL)
 		{
 			printf("Owner: %s\n", d->owner);
 		}
 		else
 		{
-			printf("Owner: (nil)");
+			printf("Owner: (nil)\n");
 		}
 	}
 }
