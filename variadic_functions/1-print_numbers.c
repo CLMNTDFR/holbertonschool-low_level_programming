@@ -22,10 +22,10 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 	/* va_start prend le nom de la va_liste et la dernière variable connue */
 	for (i = 0; i < n - 1; i++)
 	{
-		printf("%d%s", va_arg(liste, unsigned int), separator);
+		printf("%d%s", va_arg(liste, int), separator);
 
 	}
-	printf("%d\n", va_arg(liste, unsigned int));
+	printf("%d\n", va_arg(liste, int));
 	va_end(liste); /* Libération mémoire */
 	}
 }
