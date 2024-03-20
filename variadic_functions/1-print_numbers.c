@@ -16,16 +16,19 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 
 	unsigned int i;
 
-	if (separator != NULL && n > 0)
-	{
-		va_start(liste, n);
+	va_start(liste, n);
 	/* va_start prend le nom de la va_liste et la dernière variable connue */
-	for (i = 0; i < n - 1; i++)
-	{
-		printf("%d%s", va_arg(liste, int), separator);
 
+	for (i = 0; i < n; i++)
+	{
+		printf("%d", va_arg(liste, int));
+
+		if (separator != NULL && i < n - 1)
+		{
+			printf("%s", separator);
+		}
 	}
-	printf("%d\n", va_arg(liste, int));
+	printf("\n");
+
 	va_end(liste); /* Libération mémoire */
-	}
 }
