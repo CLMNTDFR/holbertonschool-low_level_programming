@@ -16,11 +16,14 @@ int sum_dlistint(dlistint_t *head)
 
 	if (index_node == NULL)
 		return (0);
+    /* check if list is empty */
 
 	while (index_node != NULL)
 	{
 		sum += index_node->n;
+    /* accessing the struct's data with '->' and adding the data to the sum */
 		index_node = index_node->next;
+    /* jump to the next node */
 	}
 	return (sum);
 }
