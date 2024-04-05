@@ -26,19 +26,29 @@ ssize_t read_textfile(const char *filename, size_t letters)
 
 /* open file in RDONLY */
 	o = open(filename, O_RDONLY);
-/* read 'letters' bytes of data in buffer */
-	r = read(o, buffer, letters);
-/* write buffer's data on std output POSIX */
-/* 'r' represent number of readed datas */
-	w = write(STDOUT_FILENO, buffer, r);
-
-/* check if error when program open, read or write */
-/* or if r's data and w's data have different values */
-	if (o == -1 || r == -1 || w == -1 || w != r)
-	{
+	if (o == -1)
+    {
 		free(buffer);
 		return (0);
 	}
+/* read 'letters' bytes of data in buffer */
+	r = read(o, buffer, letters);
+	if (r == -1)
+    {
+		free(buffer);
+		close(o);
+		return (0);
+	}
+/* write buffer's data on std output POSIX */
+/* 'r' represent number of readed datas */
+	w = write(STDOUT_FILENO, buffer, r);
+	if (w == -1 || w < r) {
+		free(buffer);
+		close(o);
+		return (0);
+	}
+/* check if error when program open, read or write */
+/* or if r's data and w's data have different values */
 
 	free(buffer);
 	close(o);
