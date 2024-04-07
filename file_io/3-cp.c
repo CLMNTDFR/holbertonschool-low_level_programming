@@ -1,118 +1,122 @@
 #include "main.h"
 
 /**
-* main - Copies the content of a file to another file
-* @argc: Number of arguments
-* @argv: Name of the file
+* main - copies the content  of a file to another file
+* @ac: number of arguments
+* @av: name of the file
 * Return: Always 0.
 */
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	int read_success_src, success_dst;
+
+	int read_sucess_file_from;
+	int sucess_file_to;
 	char *buffer_main;
 
-	if (argc != 3)
+
+	if (ac != 3)
 	{
-		/* Print usage message to standard error and exit with error code */
-		dprintf(2, "Usage: %s file_from file_to\n", argv[0]);
+		dprintf(2, "Usage: %s file_from file_to\n", av[0]);
 		exit(97);
 	}
 
-	/* Allocate memory for the main buffer */
 	buffer_main = malloc(1024);
-	if (buffer_main == NULL)
-		return (-1);
 
-	/* Read from source file */
-	read_success_src = read_file(argv[1], buffer_main, 1024);
-	if (read_success_src == -1)
+	read_sucess_file_from = read_textfile2(av[1], buffer_main, 1024);
+	if (read_sucess_file_from == -1)
 	{
-		/* Print error message and exit with error code */
-		dprintf(2, "Error: Can't read from file %s\n", argv[1]);
+		dprintf(2, "Error: Can't read from file %s\n", av[1]);
 		exit(98);
 	}
 
-	/* Write to destination file */
-	success_dst = write_file(argv[2], buffer_main);
-	if (success_dst == -1)
+
+	sucess_file_to = create_file2(av[2], buffer_main);
+	if (sucess_file_to == -1)
 	{
-		/* Print error message and exit with error code */
-		dprintf(2, "Error: Can't write to %s\n", argv[2]);
+		dprintf(2, "Error: Can't write to %s\n", av[2]);
 		exit(99);
 	}
 
-	/* Free allocated memory */
+
 	free(buffer_main);
 	return (0);
 }
 
 /**
-* read_file - Read a text file and copy its content to a buffer
-* @file_name: Name of the file
-* @buffer_main: Buffer to store file content
-* @letters: Number of letters to read
-* Return: Number of letters read and copied
+* read_textfile2- read a text file and print it
+* @filename: Name of the file
+* @buffer_main: buffer that will be modify in main
+* @letters: Nuber of letter it should read and print
+* Return: the number of letters read and print
 */
-ssize_t read_file(const char *file_name, char *buffer_main, size_t letters)
+
+ssize_t read_textfile2(const char *filename, char *buffer_main, size_t letters)
 {
-	int fd_src, reading;
+	int filedescriptor;
+	int reading;
 	char *buffer;
 
-	if (file_name == NULL || buffer_main == NULL)
-		return (-1);
+	if (filename == NULL)
+	return (-1);
 
-	/* Open source file in read-only mode */
-	fd_src = open(file_name, O_RDONLY);
-	if (fd_src == -1)
-		return (-1);
+	filedescriptor = open(filename, O_RDONLY);
+	if (filedescriptor == -1)
+	return (-1);
 
-	/* Allocate memory for reading buffer */
 	buffer = malloc(sizeof(char) * letters);
 	if (buffer == NULL)
-		return (-1);
+	return (-1);
 
-	/* Read from source file into buffer */
-	reading = read(fd_src, buffer, letters);
+	reading = read(filedescriptor, buffer, letters);
 	if (reading == -1)
 	{
 		free(buffer);
 		return (-1);
 	}
 
-	/* Copy content from reading buffer to main buffer */
 	strcpy(buffer_main, buffer);
 	free(buffer);
-	close(fd_src);
-
-	return (reading);
+	close(filedescriptor);
+	if (filedescriptor == -1)
+	{
+		dprintf(2, "Error: Can't close %s\n", filename);
+		exit(100);
+	}
+	return (1);
 }
 
+
+
 /**
-* write_file - Write the content of a buffer to a file
-* @file_name: Name of the file
-* @buffer_main: Buffer containing the content to write
-* Return: 1 on success, -1 on failure
+* create_file2- create a file
+* @filename: Name of the file
+* @buffer_main: buffer that is in the main
+* Return: 1 succes, -1 faillure
 */
-int write_file(const char *file_name, char *buffer_main)
+int create_file2(const char *filename, char *buffer_main)
 {
-	int fd_dst, writing;
+	int filedescriptor;
+	int writing;
 
-	if (file_name == NULL || buffer_main == NULL)
-		return (-1);
+	if (filename == NULL)
+	return (-1);
 
-	/* Open destination file in write-only mode, creating it if not exists */
-	fd_dst = open(file_name, O_CREAT | O_WRONLY | O_TRUNC,
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	if (fd_dst == -1)
-		return (-1);
 
-	/* Write content from main buffer to destination file */
-	writing = write(fd_dst, buffer_main, strlen(buffer_main));
+	filedescriptor = open(filename, O_CREAT | O_WRONLY | O_TRUNC,
+	S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+
+	if (filedescriptor == -1)
+	return (-1);
+
+	writing = write(filedescriptor, buffer_main, strlen(buffer_main));
 	if (writing == -1)
-		return (-1);
+	return (-1);
 
-	/* Close destination file */
-	close(fd_dst);
-
+	close(filedescriptor);
+	if (filedescriptor == -1)
+	{
+		dprintf(2, "Error: Can't close %s\n", filename);
+		exit(100);
+	}
 	return (1);
 }
