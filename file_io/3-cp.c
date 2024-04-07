@@ -1,122 +1,56 @@
 #include "main.h"
 
-/**
-* main - copies the content  of a file to another file
-* @ac: number of arguments
-* @av: name of the file
-* Return: Always 0.
-*/
-int main(int ac, char **av)
-{
-
-	int read_sucess_file_from;
-	int sucess_file_to;
-	char *buffer_main;
-
-
-	if (ac != 3)
-	{
-		dprintf(2, "Usage: %s file_from file_to\n", av[0]);
-		exit(97);
-	}
-
-	buffer_main = malloc(1024);
-
-	read_sucess_file_from = read_textfile2(av[1], buffer_main, 1024);
-	if (read_sucess_file_from == -1)
-	{
-		dprintf(2, "Error: Can't read from file %s\n", av[1]);
-		exit(98);
-	}
-
-
-	sucess_file_to = create_file2(av[2], buffer_main);
-	if (sucess_file_to == -1)
-	{
-		dprintf(2, "Error: Can't write to %s\n", av[2]);
-		exit(99);
-	}
-
-
-	free(buffer_main);
-	return (0);
-}
+#define BUFFER_SIZE 1024
 
 /**
-* read_textfile2- read a text file and print it
-* @filename: Name of the file
-* @buffer_main: buffer that will be modify in main
-* @letters: Nuber of letter it should read and print
-* Return: the number of letters read and print
+* read_textfile - Copies the content of a file to another file.
+* @file_from: Name of the source file
+* @file_to: Name of the destination file
+*
+* Return: 1 on success, -1 on failure
 */
-
-ssize_t read_textfile2(const char *filename, char *buffer_main, size_t letters)
+ssize_t read_textfile2(const char *file_from, const char *file_to)
 {
-	int filedescriptor;
-	int reading;
-	char *buffer;
+	int fd_from, fd_to, rd_bytes, wr_bytes;
+	char buffer[BUFFER_SIZE];
 
-	if (filename == NULL)
-	return (-1);
+	/* Open source file */
+	fd_from = open(file_from, O_RDONLY);
+	if (fd_from == -1)
+		return (-1);
 
-	filedescriptor = open(filename, O_RDONLY);
-	if (filedescriptor == -1)
-	return (-1);
-
-	buffer = malloc(sizeof(char) * letters);
-	if (buffer == NULL)
-	return (-1);
-
-	reading = read(filedescriptor, buffer, letters);
-	if (reading == -1)
+	/* Open destination file (truncate if it exists) */
+	fd_to = open(file_to, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | 
+    S_IRGRP | S_IWGRP | S_IROTH);
+	if (fd_to == -1)
 	{
-		free(buffer);
+		close(fd_from);
 		return (-1);
 	}
 
-	strcpy(buffer_main, buffer);
-	free(buffer);
-	close(filedescriptor);
-	if (filedescriptor == -1)
+	/* Copy content from source to destination */
+	while ((rd_bytes = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
-		dprintf(2, "Error: Can't close %s\n", filename);
-		exit(100);
+		wr_bytes = write(fd_to, buffer, rd_bytes);
+		if (wr_bytes != rd_bytes)
+		{
+			close(fd_from);
+			close(fd_to);
+			return (-1);
+		}
 	}
-	return (1);
-}
 
-
-
-/**
-* create_file2- create a file
-* @filename: Name of the file
-* @buffer_main: buffer that is in the main
-* Return: 1 succes, -1 faillure
-*/
-int create_file2(const char *filename, char *buffer_main)
-{
-	int filedescriptor;
-	int writing;
-
-	if (filename == NULL)
-	return (-1);
-
-
-	filedescriptor = open(filename, O_CREAT | O_WRONLY | O_TRUNC,
-	S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-
-	if (filedescriptor == -1)
-	return (-1);
-
-	writing = write(filedescriptor, buffer_main, strlen(buffer_main));
-	if (writing == -1)
-	return (-1);
-
-	close(filedescriptor);
-	if (filedescriptor == -1)
+	/* Error checking */
+	if (rd_bytes == -1)
 	{
-		dprintf(2, "Error: Can't close %s\n", filename);
-		exit(100);
+		close(fd_from);
+		close(fd_to);
+		return (-1);
 	}
+
+	/* Close file descriptors */
+	if (close(fd_from) == -1 || close(fd_to) == -1)
+		return (-1);
+
 	return (1);
 }
